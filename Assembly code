@@ -7,3 +7,8 @@ ldi r16,0b00000001
 out DDRB,r16
 ;Writing the number 2 on the seven segment display
 ldi r17,0b10010000
+out PortD,r17
+ldi r17,0b00000000
+out PortB,r17
+Start:
+rjmp Start

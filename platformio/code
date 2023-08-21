@@ -1,0 +1,76 @@
+// D flip-flop pins
+const int dPin1 = 2;
+const int clkPin1 = 3;
+const int qPin1 = 4;
+const int qBarPin1 = 5;
+
+const int dPin2 = 6;
+const int clkPin2 = 7;
+const int qPin2 = 8;
+const int qBarPin2 = 9;
+
+// 7-segment display pins
+const int aPin = 10;
+const int bPin = 11;
+const int cPin = 12;
+const int dPin = 13;
+const int ePin = A0;
+const int fPin = A1;
+const int gPin = A2;
+
+void setup() {
+  pinMode(dPin1, INPUT);
+  pinMode(clkPin1, INPUT);
+  pinMode(qPin1, OUTPUT);
+  pinMode(qBarPin1, OUTPUT);
+
+  pinMode(dPin2, INPUT);
+  pinMode(clkPin2, INPUT);
+  pinMode(qPin2, OUTPUT);
+  pinMode(qBarPin2, OUTPUT);
+
+  pinMode(aPin, OUTPUT);
+  pinMode(bPin, OUTPUT);
+  pinMode(cPin, OUTPUT);
+  pinMode(dPin, OUTPUT);
+  pinMode(ePin, OUTPUT);
+  pinMode(fPin, OUTPUT);
+  pinMode(gPin, OUTPUT);
+}
+
+void loop() {
+  // Read inputs for Flip-flop 1
+  bool d1 = digitalRead(dPin1);
+  bool clk1 = digitalRead(clkPin1);
+
+  // Read inputs for Flip-flop 2
+  bool d2 = digitalRead(dPin2);
+  bool clk2 = digitalRead(clkPin2);
+
+  // Update Flip-flop 1
+  if (clk1 == HIGH && d1 == HIGH) {
+    qPin1 = HIGH;
+    qBarPin1 = LOW;
+  } else if (clk1 == HIGH && d1 == LOW) {
+    qPin1 = LOW;
+    qBarPin1 = HIGH;
+  }
+
+  // Update Flip-flop 2
+  if (clk2 == HIGH && d2 == HIGH) {
+    qPin2 = HIGH;
+    qBarPin2 = LOW;
+  } else if (clk2 == HIGH && d2 == LOW) {
+    qPin2 = LOW;
+    qBarPin2 = HIGH;
+  }
+
+  // Display Q and Q' states on the 7-segment display
+  digitalWrite(aPin, qPin1);
+  digitalWrite(bPin, qBarPin1);
+  digitalWrite(cPin, qBarPin1);
+  digitalWrite(dPin, qPin1);
+  digitalWrite(ePin, !qBarPin1);
+  digitalWrite(fPin, qBarPin1);
+  digitalWrite(gPin, !qPin1);
+}
